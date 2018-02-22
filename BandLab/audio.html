@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-filter/0.4.7/angular-filter.js"></script>
+    <link rel="stylesheet" href="../NodeJs/styles.css" />
+<body>
+     <style>
+       .header {
+     width: 100%;
+     height: 68px;
+     background-color: #31383B;
+     position: fixed;
+     z-index: 5;
+     top: 0px;
+     Font-size: 35px;
+     padding-left: 12px;
+     padding-top: 9px;
+     margin: 0;
+     padding-right: 12px;
+     float: left;
+     color: white;
+     margin-left: -8px;
+}
+         .heading{
+    float: left; 
+    margin-left: 15px;
+}
+
+  .audioDiv{padding-top: 115px; width: 100%;}  
+         .alinCenter{margin: 2% 0% 0% 2%;}
+
+       </style>
+    <div ng-app="myApp" ng-controller="audioCtrl">
+         <div class="header"> <span class="heading">Bandlab | Home Puzzle</span></div>
+<div class="audioDiv">
+ <audio controls>
+  <source src="https://static.bandlab.com/soundbanks/previews/new-wave-kit.ogg" type="audio/ogg">
+    </audio><br />
+ <audio controls>
+  <source src="https://static.bandlab.com/soundbanks/previews/synth-organ.ogg" type="audio/ogg">
+</audio>
+        </div>
+        <div class="alinCenter">
+        <input type="button" value="Back to ProductList" ng-click="listScreen()"/>
+        </div>
+        <div></div>
+    </div>
+    <script>
+        var app = angular.module('myApp', ['angular.filter']);
+        app.controller('audioCtrl', function ($scope, $filter, $location) {    
+          $scope.listScreen = function(){
+               window.location = "/index.html";
+            }
+        });
+    </script>
+</body>
+</html>

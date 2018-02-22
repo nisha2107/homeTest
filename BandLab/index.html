@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.4.7/angular-filter.js"></script>
+   <link rel="stylesheet" href="../NodeJs/styles.css" />
+   <body>
+       <style>
+       .header {
+     width: 100%;
+     height: 68px;
+     background-color: #31383B;
+     position: fixed;
+     z-index: 5;
+     top: 0px;
+     Font-size: 35px;
+     padding-left: 12px;
+     padding-top: 9px;
+     margin: 0;
+     padding-right: 12px;
+     float: left;
+     color: white;
+     margin-left: -8px;
+}
+ .content {
+     width: 100%;
+     margin-top: 108px;
+     border-bottom: 1px solid #524646;
+}
+ table {
+     width: 100%;
+     text-align: center;
+     background-color: lightgrey;
+}
+ tr:nth-child(even) {
+     background-color: #dddddd;
+}
+ body{
+     margin: 0px;
+     margin-top: -32px;
+}
+ .dropdown{
+     float: left;
+     margin-top: 6px;
+     margin-left: 2%;
+}
+ input[type=button]{
+     background-color: grey;
+     border: none;
+     color: white;
+     padding: 11px 29px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 16px;
+     cursor: pointer;
+}
+ .swichAudio{
+     float: left;
+     margin: 5px 0px 0px 80px;
+}
+ select{
+     margin: 50px;
+     border: 1px solid #111;
+     background: grey;
+     width: 150px;
+     padding: 5px 35px 5px 5px;
+     font-size: 16px;
+     border: 1px solid #ccc;
+     height: 34px;
+}
+.heading{
+    float: left; 
+    margin-left: 15px;
+}
+
+.groupByLbl{
+    float: left; font-size: 23px; margin-left: 28%;
+    margin-top: 9px;
+}
+.headerTbl{
+    position:fixed; border-bottom: 1px solid #524646;
+}
+.headerRow{
+    font-weight: bold; font-size: 31px; border:2px solid red; cursor:pointer;
+}
+.headerFirstCol{width:10%;}
+.dataTbl{padding-top: 44px;}
+.dataRow{border-bottom: 1px solid #B8D6E4;}
+.dataFirstCol{width:10%;}
+.dataSecondCol{width:10%;}
+.dataThirdCol{width:30%;}
+.dataFourthCol{width:30%;}
+.audioDiv{padding-top: 115px; width: 100%;}
+.alinCenter{margin: 2% 0% 0% 2%;}
+       </style>
+       
+ <div ng-app="myApp" ng-controller="myCtrl">
+         <div class="header">
+            <span class="heading">Bandlab | Home Puzzle</span>
+            <label class="groupByLbl">GroupBy: </label>
+            <select class="dropdown" ng-model="selected"  ng-options="item as item for item in groupbyVal ">
+              {{item}}
+            </select>
+            <input class="swichAudio" type="button" value="SwitchToAudio" ng-click="audioScreen()"/>
+         </div>
+         <div class="content">
+            <table class="headerTbl">
+               <tr class="headerRow">
+                  <td class="headerFirstCol" ng-click="sortList('userID')">UserID</td>
+                  <td ng-click="sortList('id')">Id</td>
+                  <td ng-click="sortList('title')">Title</td>
+                  <td ng-click="sortList('body')">Body</td>
+               </tr>
+            </table>
+            <table class="dataTbl">
+               <tr class="dataRow" ng-repeat="item in detail | orderBy:myOrderBy">
+                  <td class="dataFirstCol">{{item.userId}}</td>
+                  <td class="dataSecondCol">{{item.id}}</td>
+                  <td class="dataThirdCol">{{item.title}}</td>
+                  <td class="dataFourthCol" >{{item.body}}</td>
+               </tr>
+            </table>
+         </div>
+      </div>
+      <script>
+ var app = angular.module('myApp', ['angular.filter']);
+ app.controller('myCtrl', function($scope, $http) {
+     $http.get("products.json")
+         .then(function(response) {
+             $scope.detail = response.data;
+         });
+     $scope.sortList = function(val) {
+         $scope.myOrderBy = val;
+     }
+     $scope.myGroupList = function(val) {
+         $scope.myGroup = val.selected;
+     }
+     $scope.selected = 'Select';
+     $scope.audioScreen = function() {
+         window.location = "/audio.html";
+     }
+
+     $scope.groupbyVal = ['Select', 'userId', 'Id'];
+ });
+      </script>
+   </body>
+</html>
